@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_weather"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/sun_bg"
+    tools:context="com.example.ly.weather.weather"
+    >
+
+    <RelativeLayout
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="45.0dp"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/title_city"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="北京"
+            android:textColor="#ffffff"
+            android:layout_centerInParent="true"
+            android:textSize="35.0sp"/>
+        <ImageView
+            android:id="@+id/title_update"
+            android:layout_width="35.0dip"
+            android:layout_height="35.0dip"
+            android:src="@drawable/update_icon"
+            android:layout_alignParentRight="true"
+            />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/temp_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title"
+        android:layout_marginTop="10dp"
+        android:weightSum="1">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="8dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/temp_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="90dp"
+                android:textColor="#ffffff"
+                android:text="---"/>
+            <ImageView
+                android:id="@+id/temp_c"
+                android:src="@drawable/c_icon"
+                android:layout_width="30dip"
+                android:layout_height="30dip"
+                android:layout_toRightOf="@id/temp_text"/>
+            <TextView
+                android:id="@+id/weather_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/temp_text"
+                android:layout_below="@id/temp_c"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="10dp"
+                android:text="--------"
+                android:textSize="24dp"/>
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/weather_icon"
+            android:layout_width="100dip"
+            android:layout_height="100dp"
+            android:src="@drawable/sun"
+            android:layout_weight="0.09" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/temp_layout">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="25dip"
+                android:layout_height="25dip"
+                android:src="@drawable/wind_icon"
+                android:layout_marginLeft="5dp"/>
+            <TextView
+                android:id="@+id/wind_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:text="----------"/>
+            <ImageView
+                android:layout_width="25dip"
+                android:layout_height="25dip"
+                android:src="@drawable/humi_icon"
+                android:layout_marginLeft="5dp"/>
+            <TextView
+                android:id="@+id/humi_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:text="--------"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/date_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="40dp"
+            android:textSize="20dp"
+            android:text="x月xx日 星期x"/>
+    </RelativeLayout>
+
+</RelativeLayout>
