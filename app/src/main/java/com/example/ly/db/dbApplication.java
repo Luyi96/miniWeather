@@ -1,6 +1,7 @@
 package com.example.ly.db;
 
 import android.app.Application;
+import android.content.Intent;
 import android.os.Environment;
 import android.util.Log;
 
@@ -30,6 +31,8 @@ public class dbApplication extends Application{
         mCityDB = openCityDB();
         initCityList();
     }
+
+    //创建citylist读取的线程
     private void initCityList(){
         mCityList = new ArrayList<CityBean>();
         new Thread(new Runnable() {
@@ -40,36 +43,37 @@ public class dbApplication extends Application{
             }
         }).start();
     }
-    private boolean prepareCityList() {
+    private boolean prepareCityList()
+    {
         mCityList = mCityDB.getAllCity();
-        int i=0;
-        for (CityBean city : mCityList) {
-            i++;
-            String cityName = city.getCity();
-            String cityCode = city.getNumber();
-            Log.d(TAG,cityCode+":"+cityName);
-        }
-        Log.d(TAG,"i="+i);
+//        int i=0;
+//        for (CityBean city : mCityList) {
+//            i++;
+//            String cityName = city.getCity();
+//            String cityCode = city.getNumber();
+//            Log.d(TAG,cityCode+":"+cityName);
+//        }
+//        Log.d(TAG,"i="+i);
         return true;
     }
     public List<CityBean> getCityList() {
         return mCityList;
     }
-
     public static dbApplication getInstance(){
         return mApplication;
     }
 
+    ////将城市列表从city.db添加到私有目录数据库
     private CityDB openCityDB() {
         String path = "/data"
-                + Environment.getDataDirectory().getAbsolutePath()
-                + File.separator + getPackageName()
+                + Environment.getDataDirectory().getAbsolutePath()     ////获取绝对路径
+                + File.separator + getPackageName()                 ////File.separator 目录分隔符
                 + File.separator + "databases1"
                 + File.separator
                 + CityDB.CITY_DB_NAME;
-        File db = new File(path);
+        File db = new File(path);          ////打开city.db   /data/data/com.example.ly.weather/databases1/city.db
         Log.d(TAG,path);
-        if (!db.exists()) {
+        if (!db.exists()) { ///未在该目录读取到city.db
             String pathfolder = "/data"
                     + Environment.getDataDirectory().getAbsolutePath()
                     + File.separator + getPackageName()
@@ -78,12 +82,12 @@ public class dbApplication extends Application{
 
             File dirFirstFolder = new File(pathfolder);
             if(!dirFirstFolder.exists()){
-                dirFirstFolder.mkdirs();
+                dirFirstFolder.mkdirs();///目录不存在则创建目录
                 Log.i("MyApp","mkdirs");
             }
             Log.i("MyApp","db is not exists");
             try {
-                InputStream is = getAssets().open("city.db");
+                InputStream is = getAssets().open("city.db");///获取assets目录里的文件
                 FileOutputStream fos = new FileOutputStream(db);
                 int len = -1;
                 byte[] buffer = new byte[1024];

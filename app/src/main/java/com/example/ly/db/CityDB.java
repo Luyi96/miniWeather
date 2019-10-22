@@ -18,6 +18,7 @@ public class CityDB {
         public CityDB(Context context, String path) {
             db = context.openOrCreateDatabase(path, Context.MODE_PRIVATE, null);
         }
+        ////从.db读取数据存到List
         public List<CityBean> getAllCity() {
             List<CityBean> list = new ArrayList<CityBean>();
             Cursor c = db.rawQuery("SELECT * from " + CITY_TABLE_NAME, null);

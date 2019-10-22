@@ -1,6 +1,7 @@
 package com.example.ly.weather;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
@@ -27,6 +28,8 @@ import com.example.ly.gson.utility;
 
 
 
+
+
 public class weather extends AppCompatActivity implements View.OnClickListener{
 
     private TextView temptext,citytext,humitext,windtext,weathertext,datetext;
@@ -35,6 +38,8 @@ public class weather extends AppCompatActivity implements View.OnClickListener{
 
     /////城市选择按钮
     private TextView citysSelect;
+    ////刷新按钮
+    private ImageView updateBtn;
 
     ///已解析网络数据的message
     private static final int UPDATE_TODAY_WEATHER = 1;
@@ -42,13 +47,20 @@ public class weather extends AppCompatActivity implements View.OnClickListener{
     Timer timer = new Timer();
     long delay = 2000;
     long intevalPeriod =30*60*1000;
-    ////刷新按钮
-    private ImageView updateBtn;
+
+    ////当前选择的城市
+    String cur_city;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
+
+        ////读取上次保存的城市
+        SharedPreferences pref=getSharedPreferences("latest_city",MODE_PRIVATE);
+        cur_city=pref.getString("city","北京");///默认北京
+        Log.d("reload", "上次保存的城市："+cur_city);
+
         ////为刷新按钮增加单击事件
         updateBtn=(ImageView)findViewById(R.id.title_update);
         updateBtn.setOnClickListener(this);
@@ -63,20 +75,30 @@ public class weather extends AppCompatActivity implements View.OnClickListener{
     public void onClick(View v) {
         if(v.getId()==R.id.title_city){
             Intent i= new Intent(this,selectCity.class);
-            startActivity(i);
+            i.putExtra("curcity",cur_city);
+            startActivityForResult(i,1);////requestcode为1
         }
         if(v.getId()==R.id.title_update){
             if (Netutil.getNetworkState(this) != Netutil.NETWORN_NONE) {
                // Log.d("myWeather", "网络OK");
                 Log.d("Refresh", "天气手动刷新");
                 Toast.makeText(weather.this, "已更新！", Toast.LENGTH_LONG).show();
-                queryWeatherCode("CN101010100");
+                queryWeatherCode(cur_city);
             } else {
                 Log.d("myWeather", "网络未连接");
                 Toast.makeText(weather.this, "网络未连接！", Toast.LENGTH_LONG).show();
             }
         }
     }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            cur_city= data.getStringExtra("cityCode");////获取通过intent返回的数据
+            Log.d("myWeather", "选择的城市为"+cur_city);
+        }
+        queryWeatherCode(cur_city);
+    }
+
 
     ////定时器massage处理
     TimerTask task =new TimerTask() {
@@ -91,7 +113,7 @@ public class weather extends AppCompatActivity implements View.OnClickListener{
         @Override
         public void handleMessage(Message msg){
             Log.d("Refresh", "天气定时刷新");
-            queryWeatherCode("CN101010100");
+            queryWeatherCode(cur_city);
             super.handleMessage(msg);
         }
     };
@@ -205,7 +227,7 @@ public class weather extends AppCompatActivity implements View.OnClickListener{
         weathericon=(ImageView) findViewById(R.id.weather_icon);
         mainlayout=(RelativeLayout)findViewById(R.id.activity_weather);
 
-        if(curTime>=6 && curTime<=19)
+        if(curTime>=6 && curTime<18)
         {
             mainlayout.setBackgroundResource(R.drawable.sun_bg);
 

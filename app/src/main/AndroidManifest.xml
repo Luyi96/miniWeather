@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+
         android:name="com.example.ly.db.dbApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -20,6 +21,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".selectCity"></activity>
+
     </application>
 
 </manifest>
