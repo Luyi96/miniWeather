@@ -8,6 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/bg"
     tools:context="com.example.ly.weather.selectCity">
 
     <RelativeLayout
@@ -20,10 +21,9 @@
             android:id="@+id/title_curcity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="北京"
             android:textColor="#ffffff"
             android:layout_centerInParent="true"
-            android:textSize="35.0sp"/>
+            android:textSize="30dp"/>
         <ImageView
             android:id="@+id/title_back"
             android:layout_width="35.0dip"
@@ -33,14 +33,31 @@
             />
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/test"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <EditText
+        android:id="@+id/search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/city_select_title"
+        android:layout_marginTop="10dp"
 
+        android:hint="请输入城市名搜索"
+        android:maxLines="1"
+        android:textSize="32dp"/>
+    <TextView
+        android:id="@+id/locatedcity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/search"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="10dp"
+        android:textSize="30dp"
+        android:background="#8952b3dc"/>
     <ListView
         android:id="@+id/listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/city_select_title"></ListView>
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/locatedcity"
+        android:divider="#a45082d1"
+        android:dividerHeight="8dp"></ListView>
 </RelativeLayout>
